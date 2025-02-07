@@ -1,0 +1,106 @@
+/* 📌 전체 컨테이너: 사이드바 + 중앙 콘텐츠 */
+.container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 📌 왼쪽 사이드바 */
+.sidebar {
+    width: 250px;
+    background: #2c3e50;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+/* 📌 메인 콘텐츠 (게시글이 중앙에 위치) */
+.main-content {
+    flex: 1;
+    background: #34495e;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px; /* ✅ 중앙 정렬을 위한 최대 너비 설정 */
+    margin: 0 auto; /* ✅ 중앙 정렬 적용 */
+}
+
+/* 📌 카테고리 제목 */
+.category-header {
+    text-align: center; /* ✅ 제목도 중앙 정렬 */
+}
+
+.category-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* 📌 게시글 리스트 */
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 📌 개별 게시글 */
+.post-item {
+    background: #2c3e50;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.post-item:hover {
+    transform: scale(1.02);
+}
+
+/* 📌 게시글 제목 */
+.post-item h2 a {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1abc9c;
+    text-decoration: none;
+}
+
+.post-item h2 a:hover {
+    color: #f39c12;
+}
+
+/* 📌 날짜 & Read More 정렬 */
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+/* 📌 "Read More" 버튼 */
+.read-more {
+    color: #1abc9c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    color: #f39c12;
+}
+
+/* 📌 반응형 조정 */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

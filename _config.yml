@@ -13,6 +13,8 @@
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+custom_css:
+  - /assets/css/custom.css
 
 # Site Settings
 locale                   : "ko-KR"
@@ -113,15 +115,16 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "Bosung-Baek"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
+  bio              : "Graduate student
+School of Computer Science and Engineering, Kyungpook National University"
   location         : "Somewhere"
   email            :
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "mailto:jason803@knu.ac.kr"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -323,3 +326,12 @@ defaults:
       comments: # true
       share: true
       related: true
+      sidebar:
+        nav: "sidebar-category"
+
+# Math equation
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  input: GFM
+
