@@ -19,14 +19,15 @@ custom_css:
 # Site Settings
 locale                   : "ko-KR"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "연구/공부용 블로그"
+title                    : "Fieldnotes · 백보성의 연구 노트"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Bosung Baek"
-description              : "논문 리뷰 및 공부 정리용 블로그"
+description              : "백보성의 컴퓨터 비전·멀티모달 AI 논문 리뷰와 연구 메모."
 url                      : "https://bosung-baek.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "Bosung-Baek/Bosung-Baek.github.io"
+writing_branch           : "master"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
@@ -97,7 +98,7 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : # Open Graph/Twitter default site image
+og_image                 : "/assets/images/fieldnotes-camera.webp"
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
@@ -230,12 +231,11 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Seoul
 
 
 # Pagination with jekyll-paginate
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
+# The home and category indexes show all entries for local search.
 
 # Pagination with jekyll-paginate-v2
 # See https://github.com/sverrirs/jekyll-paginate-v2/blob/master/README-GENERATOR.md#site-configuration
@@ -320,7 +320,7 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
+      layout: note
       author_profile: true
       read_time: true
       comments: # true

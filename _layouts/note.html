@@ -1,0 +1,36 @@
+---
+layout: notebook
+---
+{% assign kind = page.note_kind | default: 'analysis' %}
+{% if page.categories contains 'Study' %}{% assign kind = 'study' %}{% endif %}
+{% case kind %}{% when 'impression' %}{% assign label = '짧은 후기' %}{% when 'study' %}{% assign label = '연구 메모' %}{% else %}{% assign label = '논문 분석' %}{% endcase %}
+<article class="reader">
+  <header class="reading-title">
+    <a class="back-link" href="{% if kind == 'study' %}{{ '/study' | relative_url }}{% else %}{{ '/paper-review' | relative_url }}{% endif %}">{% if kind == 'study' %}연구 메모{% else %}논문 리뷰{% endif %} 목록</a>
+    <div class="meta-line"><span class="venue">{{ label }}</span>{% if page.venue %}<span>{{ page.venue | escape }}</span>{% endif %}</div>
+    <h1>{{ page.paper_title | default: page.title | escape }}</h1>
+    {% if page.description %}<p class="intro">{{ page.description | escape }}</p>{% endif %}
+    <div class="byline"><span>백보성</span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time>{% if page.paper_url %}<a href="{{ page.paper_url | escape }}">논문 원문</a>{% endif %}</div>
+  </header>
+  <div class="reading-grid">
+    <div class="prose" id="note-body"{% if page.legacy_outline %} data-legacy-outline{% endif %}>{{ content }}</div>
+    <nav class="outline" id="note-outline" aria-label="글 목차" hidden><b>이 글의 목차</b><ul></ul></nav>
+  </div>
+  <div class="reader-foot">
+    <div class="reading-tools">
+      {% if page.tags.size > 0 %}<ul class="taglist" aria-label="주제">{% for tag in page.tags %}<li>{{ tag | escape }}</li>{% endfor %}</ul>{% endif %}
+      <div class="note-actions"><button type="button" class="text-button" data-copy-address hidden>글 주소 복사</button><a href="https://github.com/{{ site.repository }}/edit/{{ site.writing_branch }}/{{ page.path | uri_escape }}">GitHub에서 글 수정</a><span class="sr-only" data-copy-status role="status"></span></div>
+    </div>
+    {% if page.previous or page.next %}
+      <nav class="adjacent" aria-label="다른 글">
+        {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><small>이전 글</small>{{ page.previous.paper_title | default: page.previous.title | escape }}</a>{% endif %}
+        {% if page.next %}<a href="{{ page.next.url | relative_url }}"><small>다음 글</small>{{ page.next.paper_title | default: page.next.title | escape }}</a>{% endif %}
+      </nav>
+    {% endif %}
+    {% if page.comments and site.comments.provider and jekyll.environment == 'production' %}
+      <details class="comments"><summary>댓글 보기</summary>{% include comments.html %}</details>
+      {% include comments-providers/scripts.html %}
+    {% endif %}
+  </div>
+</article>
+<script defer src="{{ '/assets/js/note-outline.js' | relative_url }}"></script>

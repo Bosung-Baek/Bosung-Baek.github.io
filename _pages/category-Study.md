@@ -1,11 +1,6 @@
 ---
-title: "Study"
-layout: single
+title: "연구 메모"
+layout: notes-archive
 permalink: /study
-sidebar:
-  nav: sidebar-category
+section: study
 ---
-
-
-{% assign posts = site.categories.Study %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
