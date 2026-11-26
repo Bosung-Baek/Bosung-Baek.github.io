@@ -9,16 +9,31 @@ sitemap: false
 <header class="page-head manage-head">
   <h1>글쓰기</h1>
   <nav class="jump" aria-label="이 화면의 메뉴">
+    <a href="#drafts">초안함 <span class="state" id="draft-count">0</span></a>
     <a href="#posts">올린 글 고치기</a>
     <a href="#connect">GitHub 연결 <span class="state" id="connect-chip">확인 중</span></a>
+    <a href="#zotero">Zotero 연결 <span class="state" id="zotero-chip">확인 중</span></a>
     <a href="{{ repo }}/edit/{{ site.writing_branch }}/_data/profile.yml" target="_blank" rel="noopener">프로필 고치기 ↗</a>
   </nav>
 </header>
 
 <noscript><p>글쓰기 기능은 JavaScript가 필요합니다. <a href="{{ repo }}/tree/{{ site.writing_branch }}/_posts">GitHub에서 글 폴더 열기</a></p></noscript>
 
+<div class="import-bar">
+  <button type="button" class="secondary" id="zotero-open">Zotero에서 가져오기</button>
+  <span class="hint">Zotero에서 읽은 논문의 정보, 하이라이트, 메모, 손글씨를 초안으로 불러옵니다.</span>
+</div>
+<section class="zotero-panel" id="zotero-panel" hidden aria-label="Zotero 논문 고르기">
+  <div class="with-button">
+    <label class="sr-only" for="zotero-query">Zotero에서 찾기</label>
+    <input id="zotero-query" type="search" placeholder="제목 · 저자 · 연도로 찾기 (비우면 최근에 고친 순)" autocomplete="off">
+    <button type="button" class="link-button" id="zotero-close">닫기</button>
+  </div>
+  <ul class="post-rows" id="zotero-list"></ul>
+</section>
+
 <form class="compose" id="compose" hidden data-repo="{{ site.repository }}" data-branch="{{ site.writing_branch }}" data-site="{{ site.url }}{{ site.baseurl }}">
-  <p class="editing-note" id="editing-note" hidden><b>올린 글 수정 중</b> <span id="editing-name"></span> <button type="button" class="link-button" id="leave-editing">새 글로 전환</button></p>
+  <p class="editing-note" id="editing-note" hidden><b id="editing-label">올린 글 수정 중</b> <span id="editing-name"></span> <button type="button" class="link-button" id="leave-editing">새 글로 전환</button></p>
   <div class="meta-grid">
     <fieldset class="kind-field"><legend>글 유형</legend>
       <div class="filter-row">
@@ -69,11 +84,19 @@ sitemap: false
 
   <div class="publish-bar">
     <button type="button" class="primary" id="publish">발행</button>
+    <button type="button" class="secondary" id="save-draft" hidden>초안 저장</button>
     <button type="submit" class="secondary" id="download-post">파일로 받기</button>
     <span class="draft-tools"><span id="save-state" role="status">새 초안</span><button type="button" class="link-button" id="reset-draft">비우고 새 글</button></span>
     <p id="editor-message" class="editor-message" role="status"></p>
   </div>
 </form>
+
+<section class="manage-section" id="drafts">
+  <h2>초안함</h2>
+  <ul class="post-rows" id="draft-list"></ul>
+  <p class="hint" id="draft-hint">초안 목록을 불러오는 중입니다.</p>
+  <p class="hint">Zotero에서 필기한 논문을 루틴이 읽어 여기에 초안으로 올립니다. 초안은 사이트에 나오지 않지만, 저장소가 공개라서 GitHub의 <a href="{{ repo }}/tree/{{ site.writing_branch }}/_drafts" target="_blank" rel="noopener">_drafts 폴더</a>에서는 볼 수 있습니다. 필요 없는 초안은 그 폴더에서 지우세요.</p>
+</section>
 
 <section class="manage-section" id="posts">
   <h2>올린 글 고치기</h2>
@@ -108,6 +131,27 @@ sitemap: false
       <li>만료 기간을 정하고 <b>Generate token</b>을 누른 뒤, 나온 값을 위 칸에 붙여넣고 <b>연결</b>을 누릅니다.</li>
     </ol>
     <p class="hint">이 토큰으로는 이 저장소의 파일만 고칠 수 있습니다. 공용 PC에서는 등록하지 말고, 필요 없어지면 "연결 해제"를 누르거나 GitHub에서 토큰을 삭제하세요.</p>
+  </details>
+</section>
+
+<section class="manage-section" id="zotero">
+  <h2>Zotero 연결</h2>
+  <p id="zotero-state" role="status">연결 상태를 확인하는 중입니다.</p>
+  <p class="hint">읽기 전용 키를 한 번 등록하면 "Zotero에서 가져오기"를 쓸 수 있습니다. 키는 이 브라우저에만 저장되고 Zotero(api.zotero.org)로만 전송됩니다. 아이패드에서 쓰려면 아이패드 브라우저에도 한 번 등록합니다.</p>
+  <div class="with-button token-row">
+    <label class="sr-only" for="zotero-input">Zotero 키</label>
+    <input id="zotero-input" type="password" autocomplete="off" spellcheck="false" placeholder="Zotero API 키">
+    <button type="button" class="secondary" id="zotero-save">연결</button>
+    <button type="button" class="link-button" id="zotero-clear" hidden>연결 해제</button>
+  </div>
+  <details class="howto">
+    <summary>키 만드는 방법 (1분)</summary>
+    <ol>
+      <li><a href="https://www.zotero.org/settings/keys/new" target="_blank" rel="noopener">Zotero의 키 만들기 화면</a>을 엽니다.</li>
+      <li><b>Personal Library</b>에서 <b>Allow library access</b>와 <b>Allow notes access</b>를 켭니다. <b>Allow write access</b>는 끈 채로 둡니다.</li>
+      <li><b>Save Key</b>를 누르고, 나온 값을 위 칸에 붙여넣은 뒤 <b>연결</b>을 누릅니다.</li>
+    </ol>
+    <p class="hint">아이패드에서 한 표시가 보이려면 Zotero 앱의 동기화가 켜져 있어야 합니다. 손글씨는 GitHub 연결이 되어 있을 때 쪽별 그림으로 올라갑니다.</p>
   </details>
 </section>
 

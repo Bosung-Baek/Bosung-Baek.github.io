@@ -277,6 +277,13 @@ main { padding-block: 56px 96px; min-height: 70vh; }
 .howto li + li { margin-top: 6px; }
 .howto code { font: .9em var(--mono); background: var(--code); padding: .1em .35em; border-radius: 4px; }
 
+.import-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 16px; }
+.zotero-panel { margin-bottom: 20px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.zotero-panel input { padding: 9px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); font: inherit; font-size: 15.5px; }
+.zotero-panel .with-button { align-items: center; gap: 14px; }
+.zotero-panel .post-rows { max-height: 46vh; margin-top: 8px; overflow: auto; }
+.zotero-panel .post-rows li:last-child { border-bottom: 0; }
+
 /* ── small screens ── */
 @media (max-width: 720px) {
   body { font-size: 16.5px; }
