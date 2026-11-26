@@ -20,7 +20,9 @@
   if (!sections.length) return;
   if (originalToc && originalToc.nextElementSibling?.matches('ol, ul')) {
     originalToc.hidden = true;
-    originalToc.nextElementSibling.hidden = true;
+    const list = originalToc.nextElementSibling;
+    list.hidden = true;
+    if (list.nextElementSibling?.matches('hr')) list.nextElementSibling.hidden = true;
   }
   for (const heading of sections) {
     const link = document.createElement('a');

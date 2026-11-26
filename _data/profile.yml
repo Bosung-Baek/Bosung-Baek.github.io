@@ -1,0 +1,223 @@
+# ─────────────────────────────────────────────────────────────
+#  첫 화면(포트폴리오)의 모든 내용은 이 파일 하나에서 나옵니다.
+#  · 항목을 지우거나 비워 두면 화면에서도 그 부분이 사라집니다.
+#  · 줄 맨 앞 띄어쓰기(2칸 단위)만 지키면 됩니다.
+#  · 고친 뒤 GitHub에 올리면(Commit) 1~2분 안에 사이트에 반영됩니다.
+# ─────────────────────────────────────────────────────────────
+
+name: "Bosung Baek"
+name_local: "백보성"
+headline: "Computer vision researcher working on 3D scene understanding and efficient vision models."
+affiliation: "M.S., School of Computer Science and Engineering, Kyungpook National University"
+location: "Daegu, South Korea"
+photo: ""            # 예: /assets/images/profile.jpg  (비우면 사진 없이 표시)
+
+# 소개 문단. 문단마다 "- " 로 시작합니다.
+about:
+  - "I study how machines find objects in 3D scenes and video, and where they fail. My recent work is on 3D visual grounding with vision-language models: choosing the views a model sees, and tracing which step of a pipeline causes an error."
+  - "Before that I worked on 3D object detection, model compression with pruning and knowledge distillation, and video compression for machine vision at very low bitrates. I prefer results that explain a failure over results that only raise a final score."
+
+# 이름 아래 버튼. url 이 비어 있으면 표시하지 않습니다.
+links:
+  - label: "Email"
+    url: "mailto:jason803@knu.ac.kr"
+  - label: "GitHub"
+    url: "https://github.com/Bosung-Baek"
+  - label: "Google Scholar"
+    url: ""
+  - label: "CV (PDF)"
+    url: ""          # 예: /assets/files/cv.pdf
+
+interests:
+  - "3D Visual Grounding"
+  - "Vision-Language Models"
+  - "3D Object Detection"
+  - "Model Compression"
+  - "Video Coding for Machines"
+
+# ── 논문 ─────────────────────────────────────────────────────
+#  type: journal / conference / thesis 중 하나 (화면에서 이 순서로 묶여 나옵니다)
+#  authors 안에서 내 이름은 me 에 적은 글자와 똑같이 쓰면 굵게 표시됩니다. 모르면 비워 둡니다.
+#  note: 공동 1저자·수상 등 한 줄 메모 / links: PDF·Code·DOI 등 버튼
+me: "Bosung Baek"
+publications:
+  - type: journal
+    title: "Towards Ultra-Low Bitrate Machine Vision: A Semantic-Aware Video Compression Framework"
+    authors: "Aro Kim*, Bosung Baek*, Minho Park, Myeongjin Jang, Jinwoo Jeong, Sungjei Kim, Sang-hyo Park"
+    venue: "Journal of Visual Communication and Image Representation"
+    year: ""
+    status: "Under review"
+    note: "* Equal contribution"
+    links: []
+  - type: journal
+    title: "Research and Standards in 3D Scene Description Technologies: A Survey"
+    authors: "Dong-shin Lim, Dong-hun Lee, Dong-hwi Kim, Jeong-hun Hong, Aro Kim, Chae-yeong Song, Bosung Baek, Dabin Kang, Myeong-jin Jang, Jinwoo Jeong, Sungjei Kim, Sang-hyo Park"
+    venue: "APSIPA Transactions on Signal and Information Processing, 14(1)"
+    year: "2025"
+    status: ""
+    note: ""
+    links:
+      - label: "DOI"
+        url: "https://doi.org/10.1561/116.20250038"
+  - type: journal
+    title: "Efficient ESRGAN Compression Using Enhanced Knowledge Distillation Method"
+    authors: "Bosung Baek, Aro Kim, Jaeyun Jang, Hyoseok Hwang, Jaeyeol Choi, Yeongil Ryu, Eunseok Ryu, Sang-hyo Park"
+    venue: "Journal of Broadcast Engineering, 29(6), 832–841"
+    year: "2024"
+    status: ""
+    note: "In Korean · Special issue of chair-recommended papers from the KIBME Summer Conference"
+    links:
+      - label: "DOI"
+        url: "https://doi.org/10.5909/JBE.2024.29.6.832"
+  - type: journal
+    title: "엣지 컴퓨팅 환경에서 쿠버네티스 기반 네트워크 성능 제어 방식 분석"
+    authors: ""
+    venue: "Journal of the Korean Institute of Next Generation Computing, 20(1), 114–124"
+    year: "2024"
+    status: ""
+    note: "In Korean · Co-author · Network performance control with Kubernetes in edge computing"
+    links:
+      - label: "DOI"
+        url: "https://doi.org/10.23019/kingpc.20.1.202402.009"
+  - type: conference
+    title: "Multi-source Proposal Integration and VLM-based Relational Scoring for 3D Visual Grounding"
+    authors: "Bosung Baek, Dong-hun Lee, Chaewon Moon, Gahyeon Kim, Sang-hyo Park"
+    venue: "KIBME Summer Conference"
+    year: "2026"
+    status: ""
+    note: "In Korean · Outstanding Paper Award"
+    links: []
+  - type: conference
+    title: "초저비트율 머신 비전을 위한 의미 인식 비디오 부호화 프레임워크"
+    authors: ""
+    venue: "KIBME Summer Conference"
+    year: "2026"
+    status: ""
+    note: "In Korean · Co-first author · Best Paper Award · Conference version of the semantic-aware video compression framework"
+    links: []
+  - type: conference
+    title: "NVS의 암시적 및 명시적 표현 방식에 따른 객체 탐지 성능 분석"
+    authors: ""
+    venue: "KIBME Summer Conference"
+    year: "2025"
+    status: ""
+    note: "In Korean · Co-author · Object detection on implicit and explicit novel-view-synthesis representations"
+    links: []
+  - type: conference
+    title: "GAN 압축 기법을 활용한 효율적인 ESRGAN 가지치기 기법"
+    authors: ""
+    venue: "KIBME Summer Conference"
+    year: "2024"
+    status: ""
+    note: "In Korean · First author · Pruning the ESRGAN generator"
+    links: []
+  - type: thesis
+    title: "Geometrically-Grounded Bounding Box Refinement for 3D Object Detection"
+    authors: "Bosung Baek"
+    venue: "M.S. thesis, Kyungpook National University"
+    year: "2026"
+    status: ""
+    note: "Advisor: Prof. Sang-hyo Park"
+    links: []
+
+# ── 연구·프로젝트 ────────────────────────────────────────────
+#  metrics: 눈에 띄게 보여 줄 숫자 (최대 3개 권장)
+projects:
+  - title: "Relation-preserving view selection for 3D visual grounding"
+    period: ""
+    tags: ["3D Visual Grounding", "VLM"]
+    summary: "Visibility-based view selection shows the target object large but can drop the anchor object that the query refers to. I score views by whether the target and its anchor appear together, and compare against a reproduced SeqVLM with the same Qwen2-VL-7B backbone, changing only the view selection."
+    metrics:
+      - value: "34.4 → 44.8"
+        label: "Overall Acc@0.25 (%)"
+      - value: "28.8 → 40.8"
+        label: "Overall Acc@0.50 (%)"
+    links: []
+  - title: "Diagnosing where 3D visual grounding pipelines fail"
+    period: "Ongoing"
+    tags: ["3D Visual Grounding", "Evaluation"]
+    summary: "Final grounding accuracy cannot tell a missing candidate from evidence that never reached the model, an invalid output, or a wrong choice. I convert the artifacts that different systems already produce into a common trace and record the earliest observable failure in each query."
+    metrics: []
+    links: []
+  - title: "PointRefine3D: bounding box refinement for indoor 3D object detection"
+    period: "M.S. thesis"
+    tags: ["3D Object Detection"]
+    summary: "Detectors predict loose boxes when objects sit next to each other or against walls and floors. On top of UniDet3D, without changing its backbone, I added a point-level IoU loss for training and a refinement step at inference that corrects boxes with low predicted IoU, at 1.05× the inference time. Accuracy rose on S3DIS and 3RScan and fell on ScanNetV2 (−2.0) and MultiScan (−0.7)."
+    metrics:
+      - value: "58.4 → 62.3"
+        label: "mAP@0.5 on S3DIS"
+      - value: "45.6 → 49.6"
+        label: "mAP@0.5 on 3RScan"
+    links: []
+  - title: "SAVER: video compression for machine vision at ultra-low bitrates"
+    period: ""
+    tags: ["Video Coding for Machines", "Super-Resolution"]
+    summary: "At 0.001 bpp, standard codecs and existing machine-oriented codecs lose the content that detection and tracking depend on. SAVER keeps a standard codec unchanged and adds object-aware downsampling before it and compression-aware reconstruction after it. Co-first author: software, experiments, validation, analysis and first draft."
+    metrics:
+      - value: "55.37"
+        label: "detection mAP on ImageNet VID at 0.001 bpp (MPEG VCM: 31.28)"
+      - value: "42.08"
+        label: "tracking MOTA on MOT20 (RDVR: 34.71)"
+      - value: "24.04"
+        label: "CLIP-Score, video captioning"
+    links: []
+  - title: "Compressing ESRGAN with pruning and knowledge distillation"
+    period: ""
+    tags: ["Model Compression", "Super-Resolution"]
+    summary: "GAN-based super-resolution models are too large for constrained devices. I prune the teacher generator first, then pass its intermediate feature maps to a narrower student through learnable 1×1 convolutions that match the channel counts."
+    metrics:
+      - value: "11.7M → 6.5M"
+        label: "generator parameters (−44.4%)"
+    links: []
+
+education:
+  - degree: "M.S. in Computer Science and Engineering"
+    school: "Kyungpook National University"
+    period: "Mar 2024 – Feb 2026"
+    detail: "Advisor: Prof. Sang-hyo Park · Thesis: Geometrically-Grounded Bounding Box Refinement for 3D Object Detection"
+  - degree: "B.S. in Electronics Engineering"
+    school: "Kyungpook National University"
+    period: "Mar 2020 – Feb 2024"
+    detail: ""
+
+awards:
+  - title: "Best Paper Award, chair-recommended papers"
+    org: "KIBME Summer Conference · semantic-aware video coding for ultra-low bitrate machine vision"
+    year: "2026"
+  - title: "Outstanding Paper Award, chair-recommended papers"
+    org: "KIBME Summer Conference · view selection for 3D visual grounding"
+    year: "2026"
+  - title: "Encouragement Prize, Smart Maritime Logistics × ICT Mentoring Competition"
+    org: "Ulsan Port Authority and FKII · AuralVision, an AR-glass communication platform for port workers"
+    year: "2023"
+  - title: "Excellence Award, Research Study Contest"
+    org: "Kyungpook National University"
+    year: "2023"
+  - title: "3rd place, Daegu Metaverse Contest"
+    org: "Daegu Digital Innovation Promotion Agency"
+    year: "2022"
+  - title: "Excellence Award, Daegu SW Hackathon"
+    org: "A YOLO-based assistant that tells visually impaired users, by voice, which objects are in view and where"
+    year: "2022"
+
+# ── 활동 ─────────────────────────────────────────────────────
+activities:
+  - title: "GDG on Campus KNU — Core member, AI engineer"
+    org: "Built a generative AI workflow application for the APAC Solution Challenge"
+    period: "Sep 2023 – Jul 2024"
+  - title: "GDSC KNU — Backend developer"
+    org: "Spring Boot backends for a diet-tracking service and a cross-platform OTT search engine"
+    period: "Sep 2022 – Jul 2023"
+  - title: "GNB Software Developing Research Group — Project lead, developer"
+    org: "Led an Arduino plant-growth monitoring device; YOLO object detection and TensorFlow projects"
+    period: "Jun 2020 – Mar 2023"
+
+skills:
+  - group: "Languages & frameworks"
+    items: "Python, PyTorch, TensorFlow"
+  - group: "3D & vision-language"
+    items: "3D object detection, 3D visual grounding, multi-view prompting with Qwen2-VL"
+  - group: "Efficiency"
+    items: "Pruning, knowledge distillation, VVC-based compression pipelines"
+  - group: "Evaluation"
+    items: "ScanRefer, Nr3D, ScanNetV2, S3DIS, ImageNet VID, MOT20; failure tracing and controlled interventions"

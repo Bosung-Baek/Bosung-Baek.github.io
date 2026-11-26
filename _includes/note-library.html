@@ -3,48 +3,40 @@
 {% if include.group == 'study' %}{% assign entries = site.categories['Study'] %}{% endif %}
 {% assign topics = entries | map: 'tags' | join: '|' | split: '|' | uniq | sort %}
 <section class="library" data-library>
-  <div class="library-head">
-    <h2>{{ include.heading }} <span class="small-count" data-total>{{ entries.size | default: 0 }}</span></h2>
-    <label class="search-box" hidden data-control><span class="search-icon" aria-hidden="true"></span><span class="sr-only">제목, 주제, 학회 검색</span><input type="search" data-query placeholder="제목·주제·학회" autocomplete="off"></label>
-  </div>
-  <div class="library-body">
-    <div class="entry-list" data-entries>
-      {% for post in entries %}
-        {% assign kind = post.note_kind | default: 'analysis' %}
-        {% if post.categories contains 'Study' %}{% assign kind = 'study' %}{% endif %}
-        {% case kind %}{% when 'impression' %}{% assign kind_label = '짧은 후기' %}{% when 'study' %}{% assign kind_label = '연구 메모' %}{% else %}{% assign kind_label = '논문 분석' %}{% endcase %}
-        {% assign record_title = post.paper_title | default: post.title %}
-        <article class="entry" data-entry data-kind="{{ kind | escape }}" data-tags="{{ post.tags | jsonify | escape }}">
-          <div class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>{{ kind_label }}</span></div>
-          <div class="entry-copy">
-            {% if post.venue %}<div class="venue">{{ post.venue | escape }}</div>{% endif %}
-            <h3><a href="{{ post.url | relative_url }}">{{ record_title | escape }}</a></h3>
-            {% if post.description %}<p>{{ post.description | escape }}</p>{% endif %}
-            {% if post.tags.size > 0 %}<ul class="taglist" aria-label="주제">{% for tag in post.tags %}<li>{{ tag | escape }}</li>{% endfor %}</ul>{% endif %}
-          </div>
-        </article>
-      {% else %}
-        <div class="empty"><h3>아직 등록된 글이 없습니다.</h3><a href="{{ '/write/' | relative_url }}">첫 글 작성하기</a></div>
-      {% endfor %}
-      <div class="empty" data-no-match hidden><h3>조건에 맞는 글이 없습니다.</h3><button type="button" class="text-button" data-clear>검색과 필터 지우기</button></div>
+  {% unless entries == empty or entries == nil %}
+  <div class="library-tools" hidden data-control>
+    <label class="search"><span class="sr-only">제목, 주제, 학회 검색</span><input type="search" data-query placeholder="제목 · 주제 · 학회 검색" autocomplete="off"></label>
+    {% if include.group == 'all' %}
+    <div class="filter-row" role="group" aria-label="글 유형">
+      <button type="button" data-kind-filter="" aria-pressed="true">전체</button>
+      <button type="button" data-kind-filter="analysis" aria-pressed="false">논문 리뷰</button>
+      <button type="button" data-kind-filter="impression" aria-pressed="false">짧은 후기</button>
+      <button type="button" data-kind-filter="study" aria-pressed="false">연구 메모</button>
     </div>
-    {% unless entries == empty or entries == nil %}
-    <aside class="filters" aria-label="글 필터" hidden data-control>
-      {% unless include.group == 'study' %}
-      <fieldset><legend>글 유형</legend>
-        <div class="filter-options">
-          <button type="button" data-kind-filter="" aria-pressed="true">전체</button>
-          <button type="button" data-kind-filter="analysis" aria-pressed="false">논문 분석</button>
-          <button type="button" data-kind-filter="impression" aria-pressed="false">짧은 후기</button>
-          {% unless include.group == 'papers' %}<button type="button" data-kind-filter="study" aria-pressed="false">연구 메모</button>{% endunless %}
-        </div>
-      </fieldset>
-      {% endunless %}
-      {% if topics.size > 0 %}<fieldset><legend>주제</legend><div class="filter-options">
-        {% for tag in topics %}{% unless tag == '' %}<button type="button" data-topic="{{ tag | escape }}" aria-pressed="false">{{ tag | escape }}</button>{% endunless %}{% endfor %}
-      </div></fieldset>{% endif %}
-    </aside>
-    {% endunless %}
+    {% endif %}
+    {% if topics.size > 0 %}
+    <div class="filter-row" role="group" aria-label="주제">
+      {% for tag in topics %}{% unless tag == '' %}<button type="button" data-topic="{{ tag | escape }}" aria-pressed="false">{{ tag | escape }}</button>{% endunless %}{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endunless %}
+  <p class="count"><span data-total>{{ entries.size | default: 0 }}</span>개의 글</p>
+  <div class="entries" data-entries>
+    {% for post in entries %}
+      {% assign kind = post.note_kind | default: 'analysis' %}
+      {% if post.categories contains 'Study' %}{% assign kind = 'study' %}{% endif %}
+      {% case kind %}{% when 'impression' %}{% assign kind_label = '짧은 후기' %}{% when 'study' %}{% assign kind_label = '연구 메모' %}{% else %}{% assign kind_label = '논문 리뷰' %}{% endcase %}
+      <article class="entry" data-entry data-kind="{{ kind | escape }}" data-tags="{{ post.tags | jsonify | escape }}">
+        <p class="kicker"><span>{{ kind_label }}</span>{% if post.venue %}<span>{{ post.venue | escape }}</span>{% endif %}<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time></p>
+        <h2><a href="{{ post.url | relative_url }}">{{ post.paper_title | default: post.title | escape }}</a></h2>
+        {% if post.description %}<p class="summary">{{ post.description | escape }}</p>{% endif %}
+        {% if post.tags.size > 0 %}<ul class="tags" aria-label="주제">{% for tag in post.tags %}<li>{{ tag | escape }}</li>{% endfor %}</ul>{% endif %}
+      </article>
+    {% else %}
+      <div class="empty"><p>아직 등록된 글이 없습니다.</p></div>
+    {% endfor %}
+    <div class="empty" data-no-match hidden><p>조건에 맞는 글이 없습니다.</p><button type="button" class="link-button" data-clear>검색과 필터 지우기</button></div>
   </div>
   <p class="sr-only" data-found aria-live="polite"></p>
 </section>

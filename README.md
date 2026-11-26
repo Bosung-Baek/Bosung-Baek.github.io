@@ -1,17 +1,26 @@
-# Fieldnotes · 백보성의 연구 노트
+# bosung-baek.github.io
 
-[블로그](https://bosung-baek.github.io/) · [새 글 쓰기](https://bosung-baek.github.io/write/) · [게시한 원고](_posts/)
+[사이트](https://bosung-baek.github.io/) · [관리 화면](https://bosung-baek.github.io/write/)
 
-## 논문을 읽고 글 올리기
+포트폴리오(첫 화면, 영어)와 논문 리뷰·연구 메모(Notes, 한국어)로 이루어진 개인 사이트입니다.
 
-1. 블로그의 **글쓰기**를 열고 논문 분석, 짧은 후기, 연구 메모 중 하나를 고릅니다. 제목과 본문을 쓰고, 필요하면 원문 주소·학회·주제를 덧붙입니다. **글 틀 넣기**로 빈 본문에 유형별 소제목을 넣을 수 있습니다.
-2. **미리보기**로 표와 본문을 확인한 후 **Markdown 파일 받기**를 누릅니다. 초안은 현재 브라우저에 저장됩니다. 받은 파일은 별도로 보관할 수 있습니다.
-3. **GitHub 업로드 열기**에서 파일을 선택하고 이 저장소의 `master` 브랜치에 **Commit changes**를 누릅니다. GitHub Pages 빌드가 끝나면 글 목록에 나타납니다. 로컬에서 쓰는 경우 같은 파일을 `_posts/`에 넣고 커밋해도 됩니다.
-4. 게시된 글 아래의 **글 주소 복사**로 개인 독서 관리표에 링크를 남길 수 있습니다. **GitHub에서 글 수정**은 해당 원고를 엽니다.
+## 고치는 방법
 
-이미지는 `assets/images/`에 올린 뒤 Markdown에서 `![그림 설명](/assets/images/파일명.png)`으로 연결합니다. 수식은 본문 안에서 `$$x^2$$`, 여러 줄 수식은 앞뒤에 빈 줄을 두고 `$$` 구분자를 각각 한 줄에 씁니다.
+| 하고 싶은 일 | 고칠 곳 |
+| --- | --- |
+| 소개·논문·연구·학력·기술 수정 | [`_data/profile.yml`](_data/profile.yml) 파일 하나. 비워 둔 항목은 화면에 나오지 않습니다. |
+| 새 글 쓰기 | [관리 화면](https://bosung-baek.github.io/write/)에서 작성 → **GitHub에서 발행** → Commit changes |
+| 올린 글 수정 | 글 아래 **수정** 링크, 또는 [`_posts/`](_posts/)에서 파일 선택 |
+| 그림 추가 | `assets/images/`에 올리고 본문에 `![설명](/assets/images/파일명.png)` |
+| 프로필 사진·CV | 파일을 `assets/images/`, `assets/files/`에 올린 뒤 `profile.yml`의 `photo`, `links`에 경로 입력 |
 
-홈은 `index.html`, 글 화면은 `_layouts/note.html`, 글쓰기 화면은 `_pages/write.html`에 있습니다. 글쓰기 미리보기에는 [markdown-it 15.0.3](https://github.com/markdown-it/markdown-it)과 [배포 라이선스](assets/lib/markdown-it/LICENSE)를 사용합니다.
+GitHub에서 Commit하면 1~2분 뒤 사이트에 반영됩니다. 수식은 `$$x^2$$`, 여러 줄 수식은 앞뒤에 빈 줄을 두고 `$$`를 한 줄씩 씁니다.
+
+## 파일 구성
+
+- `index.html` 첫 화면 · `_layouts/site.html` 공통 틀(상단 메뉴·하단) · `_layouts/note.html` 글 화면
+- `_pages/notes.html` 글 목록 · `_pages/write.html` 관리·글쓰기 화면 · `assets/css/site.css` 전체 디자인
+- 글쓰기 미리보기에는 [markdown-it 15.0.3](https://github.com/markdown-it/markdown-it)([라이선스](assets/lib/markdown-it/LICENSE))을 사용합니다.
 
 ## [기반 테마 · Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/)
 

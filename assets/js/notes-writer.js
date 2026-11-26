@@ -117,23 +117,50 @@
     const literalBody = d.body.trim().replace(/\{(?:\{|%)/g, opener => '{{ '+ "'" + opener + "'" +' }}');
     return front.concat('---','',literalBody,'').join('\n');
   }
-  form.addEventListener('submit', event => {
-    event.preventDefault();
+  function checked() {
     const d = state();
-    if (!d.title.trim()) { form.elements.title.focus(); message.textContent='제목을 입력해 주세요.'; return; }
+    if (!d.title.trim()) { form.elements.title.focus(); message.textContent='제목을 입력해 주세요.'; return null; }
     if (!d.body.trim() || d.body.trim() === guides[d.kind].map(x=>'## '+x+'\n\n').join('\n').trim()) {
-      showPreview(false); body.setCustomValidity('본문 내용을 입력해 주세요.'); body.reportValidity(); body.focus(); return;
+      showPreview(false); body.setCustomValidity('본문 내용을 입력해 주세요.'); body.reportValidity(); body.focus(); return null;
     }
     if (d.paper.trim() && !/^https?:\/\//i.test(d.paper.trim())) {
-      form.elements.paper.setCustomValidity('http 또는 https 원문 주소를 입력해 주세요.');form.elements.paper.reportValidity();return;
+      form.elements.paper.setCustomValidity('http 또는 https 원문 주소를 입력해 주세요.');form.elements.paper.reportValidity();return null;
     }
+    return d;
+  }
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const d = checked();
+    if (!d) return;
     const link = document.createElement('a'), filename = fileFor(d);
     const url = URL.createObjectURL(new Blob([markdownFor(d)], {type:'text/markdown;charset=utf-8'}));
     link.href=url; link.download=filename; document.body.append(link); link.click(); link.remove();
     window.setTimeout(()=>URL.revokeObjectURL(url),30000);
     get('export-name').textContent=filename; exportStep.hidden=false;
-    message.textContent='발행용 파일을 만들었습니다. 초안은 계속 편집할 수 있습니다.';
+    message.textContent='파일을 만들었습니다. 초안은 계속 편집할 수 있습니다.';
     exportStep.querySelector('a').focus();
+  });
+  // Open GitHub's "new file" page with the post already filled in, so publishing is one Commit click.
+  get('publish-github').addEventListener('click', async () => {
+    const d = checked();
+    if (!d) return;
+    const text = markdownFor(d);
+    const base = 'https://github.com/'+form.dataset.repo+'/new/'+form.dataset.branch+'?filename='+encodeURIComponent('_posts/'+fileFor(d));
+    const full = base+'&value='+encodeURIComponent(text);
+    exportStep.hidden = true;
+    if (full.length <= 7000) {
+      window.open(full, '_blank', 'noopener');
+      message.textContent='GitHub 새 탭에서 Commit changes를 누르면 발행됩니다.';
+      return;
+    }
+    // Long posts do not fit in an address: hand the text over through the clipboard instead.
+    try {
+      await navigator.clipboard.writeText(text);
+      window.open(base, '_blank', 'noopener');
+      message.textContent='글이 길어 본문을 클립보드에 복사했습니다. GitHub 새 탭의 빈 칸에 붙여넣기(Ctrl+V) 후 Commit changes를 누르세요.';
+    } catch {
+      message.textContent='본문을 복사하지 못했습니다. "파일로 받기"를 이용해 주세요.';
+    }
   });
   get('reset-draft').addEventListener('click', () => {
     const hasText = names.some(n=>n!=='date' && form.elements[n].value.trim());

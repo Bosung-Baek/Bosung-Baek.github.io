@@ -1,0 +1,45 @@
+---
+---
+{% assign me = site.data.profile %}
+<!doctype html>
+<html lang="{{ page.lang | default: 'ko' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include seo.html %}
+  <meta name="color-scheme" content="light dark">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | relative_url }}">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+  {% if page.workspace %}<meta name="robots" content="noindex">{% endif %}
+  {% if page.use_math or page.workspace %}
+    <script src="{{ '/assets/js/notes-math.js' | relative_url }}"></script>
+    <script async id="mathjax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  {% endif %}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="{{ '/' | relative_url }}">{{ me.name | escape }}</a>
+      <nav class="nav" aria-label="Main">
+        <a href="{{ '/#research' | relative_url }}">Research</a>
+        <a href="{{ '/#publications' | relative_url }}">Publications</a>
+        <a href="{{ '/notes/' | relative_url }}"{% if page.section or page.layout == 'note' %} aria-current="page"{% endif %}>Notes</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="main">{{ content }}</main>
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <span>© {{ site.time | date: '%Y' }} {{ me.name | escape }}</span>
+      <nav aria-label="Links">
+        {% for link in me.links %}{% if link.url and link.url != '' %}<a href="{{ link.url | relative_url | escape }}">{{ link.label | escape }}</a>{% endif %}{% endfor %}
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        <a class="owner" href="{{ '/write/' | relative_url }}" rel="nofollow">Manage</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

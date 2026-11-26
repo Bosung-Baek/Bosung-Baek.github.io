@@ -1,12 +1,15 @@
 ---
-layout: notebook
+layout: site
 ---
 {% if page.section == 'papers' %}
   {% assign introduction = '읽은 논문의 방법과 실험, 읽고 난 뒤 남은 질문을 모았습니다.' %}
-  {% assign list_heading = '리뷰 목록' %}
+{% elsif page.section == 'study' %}
+  {% assign introduction = '실험 중 확인한 점과 다시 찾아볼 개념을 모았습니다.' %}
 {% else %}
-  {% assign introduction = '실험 중 확인한 점과 다시 찾아볼 개념을 모으는 공간입니다.' %}
-  {% assign list_heading = '메모 목록' %}
+  {% assign introduction = '논문 리뷰와 연구 메모입니다. 제목·주제·학회로 찾을 수 있습니다.' %}
 {% endif %}
-<header class="section-head"><h1>{{ page.title | escape }}</h1><p>{{ introduction }}</p></header>
-{% include note-library.html heading=list_heading group=page.section %}
+<header class="page-head">
+  <h1>{{ page.title | escape }}</h1>
+  <p>{{ introduction }}</p>
+</header>
+{% include note-library.html group=page.section %}

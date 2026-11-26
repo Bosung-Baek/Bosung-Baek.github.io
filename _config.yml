@@ -19,11 +19,11 @@ custom_css:
 # Site Settings
 locale                   : "ko-KR"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Fieldnotes · 백보성의 연구 노트"
+title                    : "Bosung Baek"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Bosung Baek"
-description              : "백보성의 컴퓨터 비전·멀티모달 AI 논문 리뷰와 연구 메모."
+description              : "Bosung Baek — computer vision researcher working on 3D scene understanding and efficient vision models."
 url                      : "https://bosung-baek.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "Bosung-Baek/Bosung-Baek.github.io"
@@ -98,7 +98,7 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : "/assets/images/fieldnotes-camera.webp"
+og_image                 : # 공유 미리보기 그림, 예: "/assets/images/profile.jpg"
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:

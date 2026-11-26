@@ -1,13 +1,150 @@
 ---
-layout: notebook
-description: "백보성의 컴퓨터 비전·멀티모달 AI 논문 리뷰와 연구 메모."
+layout: site
+lang: en
 ---
-<section class="cover" aria-labelledby="cover-title">
-  <img class="cover-art" src="{{ '/assets/images/fieldnotes-camera.webp' | relative_url }}" alt="" width="1100" height="733" fetchpriority="high">
-  <div class="cover-copy">
-    <p class="cover-author">백보성 <span>·</span> 경북대학교 컴퓨터학부</p>
-    <h1 id="cover-title">시각지능<br><em>연구 노트</em></h1>
-    <p class="cover-description">컴퓨터 비전과 멀티모달 AI 논문을 읽고,<br class="wide-break"> 방법과 실험에서 얻은 질문을 기록합니다.</p>
+{% assign me = site.data.profile %}
+{% capture me_bold %}<strong>{{ me.me | escape }}</strong>{% endcapture %}
+{% assign me_plain = me.me | escape %}
+
+<section class="hero">
+  {% if me.photo and me.photo != '' %}<img class="portrait" src="{{ me.photo | relative_url }}" alt="{{ me.name | escape }}" width="132" height="132">{% endif %}
+  <div>
+    <h1>{{ me.name | escape }}{% if me.name_local and me.name_local != '' %} <span lang="ko">{{ me.name_local | escape }}</span>{% endif %}</h1>
+    <p class="headline">{{ me.headline | escape }}</p>
+    <p class="where">{{ me.affiliation | escape }}{% if me.location and me.location != '' %} · {{ me.location | escape }}{% endif %}</p>
+    <ul class="actions">
+      {% for link in me.links %}{% if link.url and link.url != '' %}<li><a href="{{ link.url | relative_url | escape }}">{{ link.label | escape }}</a></li>{% endif %}{% endfor %}
+    </ul>
   </div>
 </section>
-{% include note-library.html heading="최근 기록" %}
+
+{% if me.about.size > 0 %}
+<section class="block" id="about">
+  <h2>About</h2>
+  <div class="block-body lead">
+    {% for para in me.about %}<p>{{ para | escape }}</p>{% endfor %}
+    {% if me.interests.size > 0 %}<ul class="chips" aria-label="Research interests">{% for item in me.interests %}<li>{{ item | escape }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if me.projects.size > 0 %}
+<section class="block" id="research">
+  <h2>Research</h2>
+  <div class="block-body">
+    {% for project in me.projects %}
+    <article class="project">
+      <header>
+        <h3>{{ project.title | escape }}</h3>
+        {% if project.period and project.period != '' %}<span class="when">{{ project.period | escape }}</span>{% endif %}
+      </header>
+      <p>{{ project.summary | escape }}</p>
+      {% if project.metrics.size > 0 %}
+      <dl class="metrics">
+        {% for metric in project.metrics %}<div><dt>{{ metric.label | escape }}</dt><dd>{{ metric.value | escape }}</dd></div>{% endfor %}
+      </dl>
+      {% endif %}
+      <div class="meta-row">
+        {% if project.tags.size > 0 %}<ul class="tags">{% for tag in project.tags %}<li>{{ tag | escape }}</li>{% endfor %}</ul>{% endif %}
+        {% for link in project.links %}<a class="more" href="{{ link.url | relative_url | escape }}">{{ link.label | escape }}</a>{% endfor %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if me.publications.size > 0 %}
+<section class="block" id="publications">
+  <h2>Publications</h2>
+  <div class="block-body">
+    {% assign pub_types = 'journal|conference|thesis' | split: '|' %}
+    {% for pub_type in pub_types %}
+    {% assign items = me.publications | where: 'type', pub_type %}
+    {% if items.size > 0 %}
+    <h3 class="group">{% case pub_type %}{% when 'journal' %}Journal{% when 'conference' %}Conference{% else %}Thesis{% endcase %}</h3>
+    <ol class="pubs">
+      {% for pub in items %}
+      <li>
+        <h4>{{ pub.title | escape }}</h4>
+        {% if pub.authors and pub.authors != '' %}<p class="authors">{{ pub.authors | escape | replace: me_plain, me_bold }}</p>{% endif %}
+        <p class="venue"><em>{{ pub.venue | escape }}</em>{% if pub.year and pub.year != '' %}, {{ pub.year | escape }}{% endif %}{% if pub.status and pub.status != '' %} <span class="badge">{{ pub.status | escape }}</span>{% endif %}</p>
+        {% if pub.note and pub.note != '' %}<p class="pub-note">{{ pub.note | escape }}</p>{% endif %}
+        {% if pub.links.size > 0 %}<p class="pub-links">{% for link in pub.links %}<a class="more" href="{{ link.url | relative_url | escape }}">{{ link.label | escape }}</a>{% endfor %}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if me.education.size > 0 %}
+<section class="block" id="education">
+  <h2>Education</h2>
+  <ul class="block-body rows">
+    {% for item in me.education %}
+    <li>
+      <div><b>{{ item.degree | escape }}</b><span>{{ item.school | escape }}</span>{% if item.detail and item.detail != '' %}<small>{{ item.detail | escape }}</small>{% endif %}</div>
+      {% if item.period and item.period != '' %}<span class="when">{{ item.period | escape }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if me.awards.size > 0 %}
+<section class="block" id="awards">
+  <h2>Awards</h2>
+  <ul class="block-body rows">
+    {% for item in me.awards %}
+    <li>
+      <div><b>{{ item.title | escape }}</b>{% if item.org and item.org != '' %}<span>{{ item.org | escape }}</span>{% endif %}</div>
+      {% if item.year and item.year != '' %}<span class="when">{{ item.year | escape }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if me.activities.size > 0 %}
+<section class="block" id="activities">
+  <h2>Activities</h2>
+  <ul class="block-body rows">
+    {% for item in me.activities %}
+    <li>
+      <div><b>{{ item.title | escape }}</b>{% if item.org and item.org != '' %}<span>{{ item.org | escape }}</span>{% endif %}</div>
+      {% if item.period and item.period != '' %}<span class="when">{{ item.period | escape }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if me.skills.size > 0 %}
+<section class="block" id="skills">
+  <h2>Skills</h2>
+  <dl class="block-body skills">
+    {% for item in me.skills %}<div><dt>{{ item.group | escape }}</dt><dd>{{ item.items | escape }}</dd></div>{% endfor %}
+  </dl>
+</section>
+{% endif %}
+
+{% if site.posts.size > 0 %}
+<section class="block" id="notes">
+  <h2>Notes</h2>
+  <div class="block-body">
+    <p class="aside" lang="en">Paper reviews and study notes, written in Korean.</p>
+    <ul class="note-rows" lang="ko">
+      {% for post in site.posts limit: 4 %}
+      <li>
+        <a href="{{ post.url | relative_url }}">{{ post.paper_title | default: post.title | escape }}</a>
+        <span class="when">{% if post.venue %}{{ post.venue | escape }} · {% endif %}<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time></span>
+      </li>
+      {% endfor %}
+    </ul>
+    <a class="more" href="{{ '/notes/' | relative_url }}">All notes ({{ site.posts.size }})</a>
+  </div>
+</section>
+{% endif %}

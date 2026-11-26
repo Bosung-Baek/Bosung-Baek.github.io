@@ -1,49 +1,61 @@
 ---
-layout: notebook
-title: 글쓰기
+layout: site
+title: 관리
 permalink: /write/
 workspace: true
 sitemap: false
 ---
-<header class="section-head writer-head"><h1>새 글 쓰기</h1><p>논문을 읽고 남긴 생각을 적으세요. 초안은 이 브라우저에 저장됩니다.</p></header>
-<noscript><p>브라우저에서 글쓰기 기능을 쓰려면 JavaScript를 켜 주세요. <a href="https://github.com/{{ site.repository }}/tree/{{ site.writing_branch }}/_posts">GitHub에서 글 폴더 열기</a></p></noscript>
-<form class="compose" id="compose" hidden>
-  <div class="sheet">
-    <fieldset class="kind-field"><legend>글 유형</legend>
-      <div class="kind-choices">
-        <label><input type="radio" name="kind" value="analysis" checked><span>논문 분석</span></label>
-        <label><input type="radio" name="kind" value="impression"><span>짧은 후기</span></label>
-        <label><input type="radio" name="kind" value="study"><span>연구 메모</span></label>
-      </div>
-    </fieldset>
-    <label for="note-title">글 제목</label><input id="note-title" name="title" required maxlength="250" placeholder="어떤 논문이나 질문을 기록할까요?">
-    <div class="field-pair">
-      <div><label for="paper-url">원문 주소 <small>선택</small></label><input id="paper-url" name="paper" type="url" placeholder="https://…"></div>
-      <div><label for="venue">학회·연도 <small>선택</small></label><input id="venue" name="venue" maxlength="100" placeholder="예: CVPR 2025"></div>
+{% assign repo = 'https://github.com/' | append: site.repository %}
+<header class="page-head">
+  <h1>사이트 관리</h1>
+  <p>방문자에게는 보이지 않는 메뉴입니다. 저장은 모두 GitHub에서 <b>Commit changes</b>를 누르면 끝나고, 1~2분 뒤 사이트에 반영됩니다.</p>
+</header>
+
+<ul class="shortcuts">
+  <li><a href="{{ repo }}/edit/{{ site.writing_branch }}/_data/profile.yml" target="_blank" rel="noopener"><b>프로필 고치기</b><span>소개 · 논문 · 연구 · 학력 · 기술 (파일 하나)</span></a></li>
+  <li><a href="#compose"><b>새 글 쓰기</b><span>아래에서 작성하고 바로 발행</span></a></li>
+  <li><a href="{{ repo }}/tree/{{ site.writing_branch }}/_posts" target="_blank" rel="noopener"><b>올린 글 고치기</b><span>글 목록에서 파일을 골라 연필 아이콘</span></a></li>
+  <li><a href="{{ repo }}/upload/{{ site.writing_branch }}/assets/images" target="_blank" rel="noopener"><b>그림 올리기</b><span>올린 뒤 본문에 <code>![설명](/assets/images/파일명)</code></span></a></li>
+</ul>
+
+<noscript><p>글쓰기 기능은 JavaScript가 필요합니다. <a href="{{ repo }}/tree/{{ site.writing_branch }}/_posts">GitHub에서 글 폴더 열기</a></p></noscript>
+<form class="compose" id="compose" hidden data-repo="{{ site.repository }}" data-branch="{{ site.writing_branch }}">
+  <h2>새 글 쓰기</h2>
+  <fieldset class="kind-field"><legend>글 유형</legend>
+    <div class="filter-row">
+      <label><input type="radio" name="kind" value="analysis" checked><span>논문 리뷰</span></label>
+      <label><input type="radio" name="kind" value="impression"><span>짧은 후기</span></label>
+      <label><input type="radio" name="kind" value="study"><span>연구 메모</span></label>
     </div>
-    <label for="tags">주제 <small>쉼표로 구분</small></label><input id="tags" name="tags" maxlength="260" placeholder="예: 3D Vision, Visual Grounding">
-    <label for="summary">한 줄 소개 <small>글 목록에 표시 · 선택</small></label><input id="summary" name="summary" maxlength="280" placeholder="이 글에서 다룰 질문이나 발견">
-    <div class="body-heading"><label for="note-body-input">본문</label><button type="button" class="text-button" id="insert-template">글 틀 넣기</button></div>
-    <div class="editor-box">
-      <div class="editor-tabs" role="group" aria-label="본문 표시 방식"><button type="button" id="edit-mode" aria-pressed="true">작성</button><button type="button" id="preview-mode" aria-pressed="false">미리보기</button></div>
-      <textarea id="note-body-input" name="body" spellcheck="false" rows="16" placeholder="논문의 질문, 근거가 된 실험, 내 해석을 적어 보세요."></textarea>
-      <div class="prose draft-preview" id="draft-preview" hidden></div>
-    </div>
-    <p class="field-hint">Markdown 제목, 표, 코드 블록을 쓸 수 있습니다. 수식은 <code>$$x^2$$</code>처럼 입력하세요.</p>
+  </fieldset>
+  <label for="note-title">글 제목</label>
+  <input id="note-title" name="title" required maxlength="250" placeholder="논문 제목 또는 기록할 질문">
+  <div class="field-pair">
+    <div><label for="paper-url">원문 주소 <small>선택</small></label><input id="paper-url" name="paper" type="url" placeholder="https://…"></div>
+    <div><label for="venue">학회·연도 <small>선택</small></label><input id="venue" name="venue" maxlength="100" placeholder="예: CVPR 2025"></div>
+    <div><label for="post-date">작성일</label><input id="post-date" name="date" type="date" required></div>
   </div>
-  <aside class="publish-box">
-    <h2>발행</h2>
-    <label for="post-date">작성일</label><input id="post-date" name="date" type="date" required>
-    <p>완성된 글을 파일로 받은 뒤 GitHub의 <code>_posts</code> 폴더에 올리면 블로그에 반영됩니다.</p>
-    <button type="submit" class="primary" id="download-post">Markdown 파일 받기</button>
-    <div class="publish-next" id="publish-next" hidden>
-      <strong>GitHub에 올릴 파일</strong><code id="export-name"></code>
-      <a class="upload-link" href="https://github.com/{{ site.repository }}/upload/{{ site.writing_branch }}/_posts" target="_blank" rel="noopener">GitHub 업로드 열기</a>
-      <p>파일을 선택한 뒤 <b>Commit changes</b>를 누르세요.</p>
-    </div>
-    <div class="draft-tools"><span id="save-state" role="status">새 초안</span><button type="button" class="text-button" id="reset-draft">새 초안</button></div>
-    <p id="editor-message" class="editor-message" role="status"></p>
-  </aside>
+  <label for="tags">주제 <small>쉼표로 구분</small></label>
+  <input id="tags" name="tags" maxlength="260" placeholder="예: 3D Vision, Visual Grounding">
+  <label for="summary">한 줄 소개 <small>글 목록에 표시 · 선택</small></label>
+  <input id="summary" name="summary" maxlength="280" placeholder="이 글에서 다룰 질문이나 발견">
+  <div class="body-heading">
+    <label for="note-body-input">본문</label>
+    <span class="editor-tabs" role="group" aria-label="본문 표시 방식"><button type="button" class="link-button" id="insert-template">글 틀 넣기</button><button type="button" id="edit-mode" aria-pressed="true">작성</button><button type="button" id="preview-mode" aria-pressed="false">미리보기</button></span>
+  </div>
+  <textarea id="note-body-input" name="body" spellcheck="false" rows="18" placeholder="Markdown으로 씁니다. 수식은 $$x^2$$ 처럼 입력하세요."></textarea>
+  <div class="prose draft-preview" id="draft-preview" hidden></div>
+
+  <div class="publish-bar">
+    <button type="button" class="primary" id="publish-github">GitHub에서 발행</button>
+    <button type="submit" class="secondary" id="download-post">파일로 받기</button>
+    <span class="draft-tools"><span id="save-state" role="status">새 초안</span><button type="button" class="link-button" id="reset-draft">새 초안</button></span>
+  </div>
+  <p id="editor-message" class="editor-message" role="status"></p>
+  <div class="publish-next" id="publish-next" hidden>
+    <b>파일로 올리는 방법</b>
+    <p>받은 파일 <code id="export-name"></code> 을 <a class="upload-link" href="{{ repo }}/upload/{{ site.writing_branch }}/_posts" target="_blank" rel="noopener">GitHub 업로드 화면</a>에 끌어다 놓고 <b>Commit changes</b>를 누르세요.</p>
+  </div>
 </form>
 <script defer src="{{ '/assets/lib/markdown-it/markdown-it.min.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/js/notes-writer.js' | relative_url }}"></script>
