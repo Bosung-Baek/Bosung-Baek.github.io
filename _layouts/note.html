@@ -18,7 +18,7 @@ layout: site
   </div>
   <footer class="reader-foot">
     {% if page.tags.size > 0 %}<ul class="tags" aria-label="주제">{% for tag in page.tags %}<li>{{ tag | escape }}</li>{% endfor %}</ul>{% endif %}
-    <p class="tools"><button type="button" class="link-button" data-copy-address hidden>글 주소 복사</button><a class="owner" href="https://github.com/{{ site.repository }}/edit/{{ site.writing_branch }}/{{ page.path | uri_escape }}" rel="nofollow">수정</a><span class="sr-only" data-copy-status role="status"></span></p>
+    <p class="tools"><button type="button" class="link-button" data-copy-address hidden>글 주소 복사</button><a class="owner" href="{{ '/write/' | relative_url }}?edit={{ page.path | uri_escape }}" rel="nofollow">수정</a><span class="sr-only" data-copy-status role="status"></span></p>
     {% if page.previous or page.next %}
     <nav class="adjacent" aria-label="다른 글">
       {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><small>이전 글</small>{{ page.previous.paper_title | default: page.previous.title | escape }}</a>{% else %}<span></span>{% endif %}

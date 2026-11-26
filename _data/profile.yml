@@ -7,8 +7,8 @@
 
 name: "Bosung Baek"
 name_local: "백보성"
-headline: "Computer vision researcher working on 3D scene understanding and efficient vision models."
-affiliation: "M.S., School of Computer Science and Engineering, Kyungpook National University"
+headline: "Ph.D. student in computer vision, working on 3D scene understanding and efficient vision models."
+affiliation: "Video Intelligence Lab, School of Computer Science and Engineering, Kyungpook National University"
 location: "Daegu, South Korea"
 photo: ""            # 예: /assets/images/profile.jpg  (비우면 사진 없이 표시)
 
@@ -23,6 +23,8 @@ links:
     url: "mailto:jason803@knu.ac.kr"
   - label: "GitHub"
     url: "https://github.com/Bosung-Baek"
+  - label: "Lab"
+    url: "https://sites.google.com/view/knuvi/"
   - label: "Google Scholar"
     url: ""
   - label: "CV (PDF)"
@@ -171,6 +173,10 @@ projects:
     links: []
 
 education:
+  - degree: "Ph.D. student in Computer Science and Engineering"
+    school: "Kyungpook National University"
+    period: "Mar 2026 – present"
+    detail: "Video Intelligence Lab · Advisor: Prof. Sang-hyo Park"
   - degree: "M.S. in Computer Science and Engineering"
     school: "Kyungpook National University"
     period: "Mar 2024 – Feb 2026"

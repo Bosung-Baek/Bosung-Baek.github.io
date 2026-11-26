@@ -30,7 +30,7 @@
       </nav>
     </div>
   </header>
-  <main class="wrap" id="main">{{ content }}</main>
+  <main class="wrap{% if page.workspace %} wide{% endif %}" id="main">{{ content }}</main>
   <footer class="foot">
     <div class="wrap foot-in">
       <span>© {{ site.time | date: '%Y' }} {{ me.name | escape }}</span>

@@ -9,9 +9,11 @@
 | 하고 싶은 일 | 고칠 곳 |
 | --- | --- |
 | 소개·논문·연구·학력·기술 수정 | [`_data/profile.yml`](_data/profile.yml) 파일 하나. 비워 둔 항목은 화면에 나오지 않습니다. |
-| 새 글 쓰기 | [관리 화면](https://bosung-baek.github.io/write/)에서 작성 → **GitHub에서 발행** → Commit changes |
-| 올린 글 수정 | 글 아래 **수정** 링크, 또는 [`_posts/`](_posts/)에서 파일 선택 |
-| 그림 추가 | `assets/images/`에 올리고 본문에 `![설명](/assets/images/파일명.png)` |
+| 새 글 쓰기 | [관리 화면](https://bosung-baek.github.io/write/)에서 작성 → **발행** (Ctrl+Enter). arXiv·DOI 주소를 넣고 **정보 가져오기**를 누르면 제목이 채워집니다. |
+| 올린 글 수정 | 글 아래 **수정** 링크, 또는 관리 화면의 **올린 글 고치기** → 고친 뒤 **수정 발행** |
+| 그림 추가 | 편집기 본문에 붙여넣기(Ctrl+V)·끌어다 놓기. `assets/images/notes/`에 자동으로 올라갑니다. |
+
+관리 화면의 **GitHub 연결**에 토큰(이 저장소, Contents: Read and write)을 한 번 등록하면 위 동작이 그 화면에서 바로 끝납니다. 등록하지 않으면 **발행**이 내용이 채워진 GitHub 화면을 열고, 그림 붙여넣기는 쓸 수 없습니다.
 | 프로필 사진·CV | 파일을 `assets/images/`, `assets/files/`에 올린 뒤 `profile.yml`의 `photo`, `links`에 경로 입력 |
 
 GitHub에서 Commit하면 1~2분 뒤 사이트에 반영됩니다. 수식은 `$$x^2$$`, 여러 줄 수식은 앞뒤에 빈 줄을 두고 `$$`를 한 줄씩 씁니다.

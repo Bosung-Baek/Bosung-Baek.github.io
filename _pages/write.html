@@ -6,56 +6,110 @@ workspace: true
 sitemap: false
 ---
 {% assign repo = 'https://github.com/' | append: site.repository %}
-<header class="page-head">
-  <h1>사이트 관리</h1>
-  <p>방문자에게는 보이지 않는 메뉴입니다. 저장은 모두 GitHub에서 <b>Commit changes</b>를 누르면 끝나고, 1~2분 뒤 사이트에 반영됩니다.</p>
+<header class="page-head manage-head">
+  <h1>글쓰기</h1>
+  <nav class="jump" aria-label="이 화면의 메뉴">
+    <a href="#posts">올린 글 고치기</a>
+    <a href="#connect">GitHub 연결 <span class="state" id="connect-chip">확인 중</span></a>
+    <a href="{{ repo }}/edit/{{ site.writing_branch }}/_data/profile.yml" target="_blank" rel="noopener">프로필 고치기 ↗</a>
+  </nav>
 </header>
 
-<ul class="shortcuts">
-  <li><a href="{{ repo }}/edit/{{ site.writing_branch }}/_data/profile.yml" target="_blank" rel="noopener"><b>프로필 고치기</b><span>소개 · 논문 · 연구 · 학력 · 기술 (파일 하나)</span></a></li>
-  <li><a href="#compose"><b>새 글 쓰기</b><span>아래에서 작성하고 바로 발행</span></a></li>
-  <li><a href="{{ repo }}/tree/{{ site.writing_branch }}/_posts" target="_blank" rel="noopener"><b>올린 글 고치기</b><span>글 목록에서 파일을 골라 연필 아이콘</span></a></li>
-  <li><a href="{{ repo }}/upload/{{ site.writing_branch }}/assets/images" target="_blank" rel="noopener"><b>그림 올리기</b><span>올린 뒤 본문에 <code>![설명](/assets/images/파일명)</code></span></a></li>
-</ul>
-
 <noscript><p>글쓰기 기능은 JavaScript가 필요합니다. <a href="{{ repo }}/tree/{{ site.writing_branch }}/_posts">GitHub에서 글 폴더 열기</a></p></noscript>
-<form class="compose" id="compose" hidden data-repo="{{ site.repository }}" data-branch="{{ site.writing_branch }}">
-  <h2>새 글 쓰기</h2>
-  <fieldset class="kind-field"><legend>글 유형</legend>
-    <div class="filter-row">
-      <label><input type="radio" name="kind" value="analysis" checked><span>논문 리뷰</span></label>
-      <label><input type="radio" name="kind" value="impression"><span>짧은 후기</span></label>
-      <label><input type="radio" name="kind" value="study"><span>연구 메모</span></label>
+
+<form class="compose" id="compose" hidden data-repo="{{ site.repository }}" data-branch="{{ site.writing_branch }}" data-site="{{ site.url }}{{ site.baseurl }}">
+  <p class="editing-note" id="editing-note" hidden><b>올린 글 수정 중</b> <span id="editing-name"></span> <button type="button" class="link-button" id="leave-editing">새 글로 전환</button></p>
+  <div class="meta-grid">
+    <fieldset class="kind-field"><legend>글 유형</legend>
+      <div class="filter-row">
+        <label><input type="radio" name="kind" value="analysis" checked><span>논문 리뷰</span></label>
+        <label><input type="radio" name="kind" value="impression"><span>짧은 후기</span></label>
+        <label><input type="radio" name="kind" value="study"><span>연구 메모</span></label>
+      </div>
+    </fieldset>
+    <div class="f-url">
+      <label for="paper-url">원문 주소 <small>선택 · arXiv나 DOI 주소면 제목을 가져옵니다</small></label>
+      <div class="with-button"><input id="paper-url" name="paper" type="url" placeholder="https://arxiv.org/abs/…"><button type="button" class="secondary" id="fetch-paper">정보 가져오기</button></div>
     </div>
-  </fieldset>
-  <label for="note-title">글 제목</label>
-  <input id="note-title" name="title" required maxlength="250" placeholder="논문 제목 또는 기록할 질문">
-  <div class="field-pair">
-    <div><label for="paper-url">원문 주소 <small>선택</small></label><input id="paper-url" name="paper" type="url" placeholder="https://…"></div>
-    <div><label for="venue">학회·연도 <small>선택</small></label><input id="venue" name="venue" maxlength="100" placeholder="예: CVPR 2025"></div>
-    <div><label for="post-date">작성일</label><input id="post-date" name="date" type="date" required></div>
+    <div class="f-title"><label for="note-title">글 제목</label><input id="note-title" name="title" required maxlength="250" placeholder="논문 제목 또는 기록할 질문"></div>
+    <div class="f-venue"><label for="venue">학회·연도 <small>선택</small></label><input id="venue" name="venue" maxlength="100" placeholder="예: CVPR 2025"></div>
+    <div class="f-date"><label for="post-date">작성일</label><input id="post-date" name="date" type="date" required></div>
+    <div class="f-tags"><label for="tags">주제 <small>쉼표로 구분</small></label><input id="tags" name="tags" maxlength="260" placeholder="예: 3D Vision, Visual Grounding" list="known-tags">
+      <datalist id="known-tags">{% assign known = site.posts | map: 'tags' | join: '|' | split: '|' | uniq | sort %}{% for tag in known %}{% unless tag == '' %}<option value="{{ tag | escape }}">{% endunless %}{% endfor %}</datalist>
+    </div>
+    <div class="f-summary"><label for="summary">한 줄 소개 <small>글 목록에 표시 · 선택</small></label><input id="summary" name="summary" maxlength="280" placeholder="이 글에서 다룰 질문이나 발견"></div>
   </div>
-  <label for="tags">주제 <small>쉼표로 구분</small></label>
-  <input id="tags" name="tags" maxlength="260" placeholder="예: 3D Vision, Visual Grounding">
-  <label for="summary">한 줄 소개 <small>글 목록에 표시 · 선택</small></label>
-  <input id="summary" name="summary" maxlength="280" placeholder="이 글에서 다룰 질문이나 발견">
-  <div class="body-heading">
-    <label for="note-body-input">본문</label>
-    <span class="editor-tabs" role="group" aria-label="본문 표시 방식"><button type="button" class="link-button" id="insert-template">글 틀 넣기</button><button type="button" id="edit-mode" aria-pressed="true">작성</button><button type="button" id="preview-mode" aria-pressed="false">미리보기</button></span>
+
+  <div class="editor" id="editor" data-mode="split">
+    <div class="toolbar" role="toolbar" aria-label="본문 도구">
+      <span class="tool-group">
+        <button type="button" data-tool="heading" title="소제목">소제목</button>
+        <button type="button" data-tool="bold" title="굵게 (Ctrl+B)"><b>굵게</b></button>
+        <button type="button" data-tool="list" title="목록">목록</button>
+        <button type="button" data-tool="link" title="링크 (Ctrl+K)">링크</button>
+        <button type="button" data-tool="code" title="코드">코드</button>
+        <button type="button" data-tool="math" title="수식">수식</button>
+        <button type="button" data-tool="table" title="표">표</button>
+        <button type="button" data-tool="image" title="그림 넣기 (붙여넣기·끌어다 놓기도 됩니다)">그림</button>
+        <button type="button" class="link-button" id="insert-template">글 틀 넣기</button>
+      </span>
+      <span class="tool-group view-modes" role="group" aria-label="화면 구성">
+        <button type="button" data-view="edit" aria-pressed="false">작성</button>
+        <button type="button" data-view="split" aria-pressed="true">나란히</button>
+        <button type="button" data-view="preview" aria-pressed="false">미리보기</button>
+      </span>
+    </div>
+    <input type="file" id="image-file" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
+    <div class="panes">
+      <label class="sr-only" for="note-body-input">본문</label>
+      <textarea id="note-body-input" name="body" spellcheck="false" placeholder="Markdown으로 씁니다. 그림은 붙여넣기(Ctrl+V)하거나 끌어다 놓으세요. 수식은 $$x^2$$ 처럼 입력합니다."></textarea>
+      <div class="prose draft-preview" id="draft-preview" aria-label="미리보기"></div>
+    </div>
   </div>
-  <textarea id="note-body-input" name="body" spellcheck="false" rows="18" placeholder="Markdown으로 씁니다. 수식은 $$x^2$$ 처럼 입력하세요."></textarea>
-  <div class="prose draft-preview" id="draft-preview" hidden></div>
 
   <div class="publish-bar">
-    <button type="button" class="primary" id="publish-github">GitHub에서 발행</button>
+    <button type="button" class="primary" id="publish">발행</button>
     <button type="submit" class="secondary" id="download-post">파일로 받기</button>
-    <span class="draft-tools"><span id="save-state" role="status">새 초안</span><button type="button" class="link-button" id="reset-draft">새 초안</button></span>
-  </div>
-  <p id="editor-message" class="editor-message" role="status"></p>
-  <div class="publish-next" id="publish-next" hidden>
-    <b>파일로 올리는 방법</b>
-    <p>받은 파일 <code id="export-name"></code> 을 <a class="upload-link" href="{{ repo }}/upload/{{ site.writing_branch }}/_posts" target="_blank" rel="noopener">GitHub 업로드 화면</a>에 끌어다 놓고 <b>Commit changes</b>를 누르세요.</p>
+    <span class="draft-tools"><span id="save-state" role="status">새 초안</span><button type="button" class="link-button" id="reset-draft">비우고 새 글</button></span>
+    <p id="editor-message" class="editor-message" role="status"></p>
   </div>
 </form>
+
+<section class="manage-section" id="posts">
+  <h2>올린 글 고치기</h2>
+  {% if site.posts.size > 0 %}
+  <ul class="post-rows">
+    {% for post in site.posts %}
+    <li><button type="button" class="link-button" data-open-post="{{ post.path | escape }}">{{ post.paper_title | default: post.title | escape }}</button><span class="when">{{ post.date | date: '%Y.%m.%d' }}</span></li>
+    {% endfor %}
+  </ul>
+  <p class="hint">제목을 누르면 위 편집기에 불러옵니다. 방금 발행한 글은 사이트가 갱신된 뒤(1~2분) 이 목록에 나타납니다. 글을 지우려면 <a href="{{ repo }}/tree/{{ site.writing_branch }}/_posts" target="_blank" rel="noopener">GitHub의 글 폴더</a>에서 파일을 삭제하세요.</p>
+  {% else %}
+  <p class="hint">아직 올린 글이 없습니다.</p>
+  {% endif %}
+</section>
+
+<section class="manage-section" id="connect">
+  <h2>GitHub 연결</h2>
+  <p id="connect-state" role="status">연결 상태를 확인하는 중입니다.</p>
+  <p class="hint">토큰을 한 번 등록하면 이 화면에서 바로 발행·수정하고 그림을 붙여넣을 수 있습니다. 토큰은 이 브라우저에만 저장되고 GitHub(api.github.com)로만 전송됩니다. 등록하지 않아도 "발행"을 누르면 내용이 채워진 GitHub 화면이 열려 Commit만 누르면 됩니다.</p>
+  <div class="with-button token-row">
+    <label class="sr-only" for="token-input">GitHub 토큰</label>
+    <input id="token-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+    <button type="button" class="secondary" id="token-save">연결</button>
+    <button type="button" class="link-button" id="token-clear" hidden>연결 해제</button>
+  </div>
+  <details class="howto">
+    <summary>토큰 만드는 방법 (1분)</summary>
+    <ol>
+      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub의 토큰 만들기 화면</a>을 엽니다 (Fine-grained token).</li>
+      <li><b>Repository access</b>에서 <b>Only select repositories</b>를 고르고 <code>{{ site.repository }}</code> 하나만 선택합니다.</li>
+      <li><b>Permissions → Repository permissions → Contents</b>를 <b>Read and write</b>로 바꿉니다. 다른 권한은 필요 없습니다.</li>
+      <li>만료 기간을 정하고 <b>Generate token</b>을 누른 뒤, 나온 값을 위 칸에 붙여넣고 <b>연결</b>을 누릅니다.</li>
+    </ol>
+    <p class="hint">이 토큰으로는 이 저장소의 파일만 고칠 수 있습니다. 공용 PC에서는 등록하지 말고, 필요 없어지면 "연결 해제"를 누르거나 GitHub에서 토큰을 삭제하세요.</p>
+  </details>
+</section>
+
 <script defer src="{{ '/assets/lib/markdown-it/markdown-it.min.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/js/notes-writer.js' | relative_url }}"></script>

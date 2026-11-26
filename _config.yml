@@ -23,7 +23,7 @@ title                    : "Bosung Baek"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Bosung Baek"
-description              : "Bosung Baek — computer vision researcher working on 3D scene understanding and efficient vision models."
+description              : "Bosung Baek — Ph.D. student in computer vision at Kyungpook National University, working on 3D scene understanding and efficient vision models."
 url                      : "https://bosung-baek.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "Bosung-Baek/Bosung-Baek.github.io"
